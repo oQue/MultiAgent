@@ -1,0 +1,102 @@
+package com.smorzhok.agent;
+
+import com.smorzhok.behavior.RequestPerformer;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Random;
+
+import jade.core.Agent;
+import jade.core.behaviours.TickerBehaviour;
+
+/**
+ * A tourist agent which is going to vacation
+ *
+ * @author Dmitry Smorzhok
+ */
+public class TouristAgent extends Agent {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TouristAgent.class);
+
+    /**
+     * Tick period for an agent's vacation behavior (in milliseconds)
+     */
+    private static final long VACATION_PERIOD = 10 * 1000;
+    /**
+     * Tick period for an agent's monthly salary behavior (in milliseconds)
+     */
+    private static final long MONTH_PERIOD = 5 * 1000;
+    /**
+     * 28 holiday days per year. Average about 2.33 per month
+     */
+    private static final double HOLIDAY_PER_MONTH = 2.33;
+    /**
+     * the shortest possible vacation is 7 days long
+     */
+    private static final byte SHORTEST_VACATION = 7;
+
+    private static final Random RANDOM = new Random();
+
+    private double income;
+    private double balance;
+    private double holidayDays;
+
+    @Override
+    protected void setup() {
+        LOGGER.debug("Tourist setup: " + getAID().getName());
+        Object[] args = getArguments();
+        if (args != null && args.length == 3) {
+            income = Double.parseDouble((String) args[0]);
+            balance = Double.parseDouble((String) args[1]);
+            holidayDays = Double.parseDouble((String) args[2]);
+            LOGGER.info("Monthly income: " + income + ". Current balance: " + balance);
+            addBehaviour(new TickerBehaviour(this, VACATION_PERIOD) {
+                @Override
+                protected void onTick() {
+                    if (readyForVacation()) {
+                        addBehaviour(new RequestPerformer());
+                    }
+                }
+            });
+            addBehaviour(new TickerBehaviour(this, MONTH_PERIOD) {
+                @Override
+                protected void onTick() {
+                    monthPassed();
+                }
+            });
+        } else {
+            LOGGER.warn("Wrong args: " + args);
+            doDelete();
+        }
+    }
+
+    @Override
+    protected void takeDown() {
+        LOGGER.debug("Tourist agent " + getAID().getName() + " terminated");
+    }
+
+    private void monthPassed() {
+        double coefficient = RANDOM.nextDouble();
+        double spentThisMonth = income * coefficient;
+        if (RANDOM.nextDouble() < 0.3) {
+            // once in ~3 months we're spending up to 3 salaries for goodies
+            int multiplier = RANDOM.nextInt(4);
+            LOGGER.debug("Multiplier: " + multiplier);
+            if (multiplier > 0) {
+                spentThisMonth *= multiplier;
+            }
+        }
+        balance += income - spentThisMonth;
+        if (balance < 0) {
+            balance = 0;
+        }
+        holidayDays += HOLIDAY_PER_MONTH;
+        LOGGER.debug("Current balance: " + balance + " (" + getAID().getName() + ")");
+    }
+
+    private boolean readyForVacation() {
+        return holidayDays > SHORTEST_VACATION && balance > income * 3;
+    }
+
+}
