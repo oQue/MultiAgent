@@ -5,10 +5,15 @@ import com.smorzhok.behavior.RequestPerformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
 import java.util.Random;
+import java.util.UUID;
 
+import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.TickerBehaviour;
+import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 
 /**
  * A tourist agent which is going to vacation
@@ -55,7 +60,7 @@ public class TouristAgent extends Agent {
                 @Override
                 protected void onTick() {
                     if (readyForVacation()) {
-                        addBehaviour(new RequestPerformer());
+                        startNegotiations();
                     }
                 }
             });
@@ -69,6 +74,19 @@ public class TouristAgent extends Agent {
             LOGGER.warn("Wrong args: " + args);
             doDelete();
         }
+    }
+
+    private void startNegotiations() {
+        ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
+//        for (int i = 0; i < sellerAgents.length; ++i) {
+//            cfp.addReceiver(sellerAgents[i]);
+//        }
+        cfp.addReceiver(new AID("operator", AID.ISLOCALNAME));
+        cfp.setContent("France"); // TODO
+        cfp.setConversationId("tour-request");
+        cfp.setReplyWith(UUID.randomUUID().toString());
+        cfp.setReplyByDate(new Date(System.currentTimeMillis() + 2000));
+        addBehaviour(new RequestPerformer(this, cfp));
     }
 
     @Override

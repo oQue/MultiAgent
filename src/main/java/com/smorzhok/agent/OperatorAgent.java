@@ -1,5 +1,8 @@
 package com.smorzhok.agent;
 
+import com.smorzhok.behavior.OfferRequestsServer;
+import com.smorzhok.behavior.PurchaseOfferServer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +19,8 @@ public class OperatorAgent extends Agent {
 
     @Override
     protected void setup() {
-        LOGGER.debug("Operator setup: " + getAID().getName());
+        addBehaviour(new OfferRequestsServer());
+        addBehaviour(new PurchaseOfferServer());
     }
 
 }
