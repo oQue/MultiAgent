@@ -27,8 +27,7 @@ public class PurchaseOfferServer extends CyclicBehaviour {
             if (price != null) {
                 reply.setPerformative(ACLMessage.INFORM);
                 LOGGER.debug("Tour to " + country + " sold to agent " + msg.getSender().getName() + " for " + price);
-            }
-            else {
+            } else {
                 reply.setPerformative(ACLMessage.FAILURE);
                 reply.setContent("not-available");
             }

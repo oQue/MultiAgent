@@ -3,8 +3,10 @@ package com.smorzhok.behavior;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Enumeration;
 import java.util.Vector;
 
+import jade.core.AID;
 import jade.core.Agent;
 import jade.lang.acl.ACLMessage;
 import jade.proto.ContractNetInitiator;
@@ -23,8 +25,31 @@ public class RequestPerformer extends ContractNetInitiator {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     protected void handleAllResponses(Vector responses, Vector acceptances) {
-        // TODO select best offer and send accept proposal response to best operator
+        int bestProposal = -1;
+        AID bestProposer = null;
+        ACLMessage accept = null;
+        Enumeration e = responses.elements();
+        while (e.hasMoreElements()) {
+            ACLMessage msg = (ACLMessage) e.nextElement();
+            if (msg.getPerformative() == ACLMessage.PROPOSE) {
+                ACLMessage reply = msg.createReply();
+                reply.setPerformative(ACLMessage.REJECT_PROPOSAL);
+                acceptances.addElement(reply);
+                int proposal = Integer.parseInt(msg.getContent());
+                if (proposal > bestProposal) {
+                    bestProposal = proposal;
+                    bestProposer = msg.getSender();
+                    accept = reply;
+                }
+            }
+        }
+        // Accept the proposal of the best proposer
+        if (accept != null) {
+            LOGGER.info("Accepting proposal " + bestProposal + " from responder " + bestProposer.getName());
+            accept.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
+        }
         super.handleAllResponses(responses, acceptances);
     }
 
