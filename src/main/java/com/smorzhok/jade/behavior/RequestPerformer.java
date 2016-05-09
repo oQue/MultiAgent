@@ -1,14 +1,18 @@
-package com.smorzhok.behavior;
+package com.smorzhok.jade.behavior;
+
+import com.smorzhok.common.StatisticsMessageContent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Vector;
 
 import jade.core.AID;
 import jade.core.Agent;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.UnreadableException;
 import jade.proto.ContractNetInitiator;
 
 /**
@@ -27,7 +31,7 @@ public class RequestPerformer extends ContractNetInitiator {
     @Override
     @SuppressWarnings("unchecked")
     protected void handleAllResponses(Vector responses, Vector acceptances) {
-        int bestProposal = -1;
+        Double bestProposal = null;
         AID bestProposer = null;
         ACLMessage accept = null;
         Enumeration e = responses.elements();
@@ -37,8 +41,19 @@ public class RequestPerformer extends ContractNetInitiator {
                 ACLMessage reply = msg.createReply();
                 reply.setPerformative(ACLMessage.REJECT_PROPOSAL);
                 acceptances.addElement(reply);
-                int proposal = Integer.parseInt(msg.getContent());
-                if (proposal > bestProposal) {
+                StatisticsMessageContent content;
+                try {
+                    content = (StatisticsMessageContent) msg.getContentObject();
+                    reply.setContentObject(content);
+                } catch (Exception ex) {
+                    LOGGER.error("Couldn't read message content: ", ex);
+                    continue;
+                }
+                if (content == null) {
+                    continue;
+                }
+                double proposal = content.getPrice();
+                if (bestProposal == null || proposal < bestProposal) {
                     bestProposal = proposal;
                     bestProposer = msg.getSender();
                     accept = reply;
@@ -56,6 +71,14 @@ public class RequestPerformer extends ContractNetInitiator {
     @Override
     protected void handleInform(ACLMessage inform) {
         LOGGER.info("Agent " + myAgent.getName() + " just bought a tour!");
+        ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+        message.addReceiver(new AID("statistics", AID.ISLOCALNAME));
+        try {
+            message.setContentObject(inform.getContentObject());
+        } catch (Exception ex) {
+            LOGGER.error("Failed to set content: ", ex);
+        }
+        myAgent.send(message);
     }
 
 }

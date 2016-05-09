@@ -1,7 +1,9 @@
-package com.smorzhok;
+package com.smorzhok.jade;
 
-import com.smorzhok.agent.OperatorAgent;
-import com.smorzhok.agent.TouristAgent;
+import com.smorzhok.common.ModelCallback;
+import com.smorzhok.jade.agent.OperatorAgent;
+import com.smorzhok.jade.agent.StatisticsAgent;
+import com.smorzhok.jade.agent.TouristAgent;
 
 import jade.core.Profile;
 import jade.core.ProfileImpl;
@@ -19,6 +21,10 @@ import jade.wrapper.StaleProxyException;
 public class JadeRunner {
 
     public static void main(String[] args) throws StaleProxyException {
+        run(null);
+    }
+
+    public static void run(ModelCallback callback) throws StaleProxyException {
         Runtime rt = Runtime.instance();
         rt.setCloseVM(true);
         Profile p = new ProfileImpl();
@@ -27,12 +33,19 @@ public class JadeRunner {
         rt.createMainContainer(p);
         // separated container for agents
         AgentContainer agentContainer = rt.createAgentContainer(p);
+
+        AgentController statistics = agentContainer.createNewAgent("statistics", StatisticsAgent.class.getName(),
+                new Object[] { callback });
+        statistics.start();
+
         for (int i = 0; i < 10; i++) {
             AgentController agent = agentContainer.createNewAgent("tourist" + i, TouristAgent.class.getName(),
                     new Object[]{"10000", "0", "0"});
             agent.start();
         }
-        AgentController operator = agentContainer.createNewAgent("operator", OperatorAgent.class.getName(), new Object[]{});
+
+        AgentController operator = agentContainer.createNewAgent("operator", OperatorAgent.class.getName(),
+                new Object[]{});
         operator.start();
     }
 

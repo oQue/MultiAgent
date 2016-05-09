@@ -1,4 +1,6 @@
-package com.smorzhok.behavior;
+package com.smorzhok.jade.behavior;
+
+import com.smorzhok.common.StatisticsMessageContent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,16 +23,16 @@ public class PurchaseOfferServer extends CyclicBehaviour {
         MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.ACCEPT_PROPOSAL);
         ACLMessage msg = myAgent.receive(mt);
         if (msg != null) {
-            String country = msg.getContent();
             ACLMessage reply = msg.createReply();
-            Integer price = 0; // TODO
-            if (price != null) {
-                reply.setPerformative(ACLMessage.INFORM);
-                LOGGER.debug("Tour to " + country + " sold to agent " + msg.getSender().getName() + " for " + price);
-            } else {
-                reply.setPerformative(ACLMessage.FAILURE);
-                reply.setContent("not-available");
+            StatisticsMessageContent content;
+            try {
+                content = (StatisticsMessageContent) msg.getContentObject();
+                reply.setContentObject(content);
+            } catch (Exception ex) {
+                LOGGER.error("Failed to set message content: ", ex);
+                return;
             }
+            reply.setPerformative(ACLMessage.INFORM);
             myAgent.send(reply);
         } else {
             block();

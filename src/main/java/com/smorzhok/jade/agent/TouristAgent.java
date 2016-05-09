@@ -1,6 +1,6 @@
-package com.smorzhok.agent;
+package com.smorzhok.jade.agent;
 
-import com.smorzhok.behavior.RequestPerformer;
+import com.smorzhok.jade.behavior.RequestPerformer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,6 @@ import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
-import jade.lang.acl.MessageTemplate;
 
 /**
  * A tourist agent which is going to vacation

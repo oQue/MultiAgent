@@ -1,7 +1,7 @@
-package com.smorzhok.agent;
+package com.smorzhok.jade.agent;
 
-import com.smorzhok.behavior.OfferRequestsServer;
-import com.smorzhok.behavior.PurchaseOfferServer;
+import com.smorzhok.jade.behavior.OfferRequestsServer;
+import com.smorzhok.jade.behavior.PurchaseOfferServer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
