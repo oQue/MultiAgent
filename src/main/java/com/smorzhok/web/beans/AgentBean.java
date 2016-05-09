@@ -11,10 +11,9 @@ import org.slf4j.LoggerFactory;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.ServletContext;
 
 import jade.util.leap.Serializable;
+import jade.wrapper.AgentContainer;
 import jade.wrapper.StaleProxyException;
 
 /**
@@ -29,6 +28,7 @@ public class AgentBean implements Serializable {
     @ManagedProperty(value = "#{statisticsBean}")
     private SimulationStatisticsBean statisticsBean;
     private String sessionId;
+    private AgentContainer container;
 
     public void setStatisticsBean(SimulationStatisticsBean statisticsBean) {
         this.statisticsBean = statisticsBean;
@@ -43,7 +43,15 @@ public class AgentBean implements Serializable {
         PortableRenderer renderer = PushRenderer.getPortableRenderer();
         statisticsBean.setRenderer(renderer);
         statisticsBean.setSessionId(sessionId);
-        JadeRunner.run(statisticsBean);
+        statisticsBean.reset();
+        container = JadeRunner.run(statisticsBean);
+    }
+
+    public void stopSimulation() throws StaleProxyException {
+        if (container != null) {
+            container.kill();
+            container = null;
+        }
     }
 
 }

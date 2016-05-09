@@ -11,18 +11,21 @@
 <h:body>
     <h:form>
         <h:commandButton value="Run Simulation" action="#{agentBean.runSimulation}" style="color: white; background-color: green;"/>
+        <h:commandButton value="Stop Simulation" action="#{agentBean.stopSimulation}" style="color: white; background-color: red;"/>
     </h:form>
-    <h:panelGrid columns="3">
-        <h:outputText value="Country"/>
-        <h:outputText value="Total tours bought"/>
-        <h:outputText value="Average Price"/>
-    </h:panelGrid>
-    <c:forEach var="country" items="${statisticsBean.map}">
-        <h:panelGrid columns="3">
-            <h:outputText value="#{country.key}"/>
-            <h:outputText value="#{country.value.toursBought}"/>
-            <h:outputText value="#{country.value.averagePrice}"/>
-        </h:panelGrid>
-    </c:forEach>
+    <h:dataTable value="#{statisticsBean.list}" var="element">
+        <h:column>
+            <f:facet name="header">Country</f:facet>
+            #{element.country}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Total tours bought</f:facet>
+            #{element.toursBought}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Average Price</f:facet>
+            #{element.averagePrice}
+        </h:column>
+    </h:dataTable>
 </h:body>
 </html>

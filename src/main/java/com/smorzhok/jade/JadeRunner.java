@@ -24,13 +24,13 @@ public class JadeRunner {
         run(null);
     }
 
-    public static void run(ModelCallback callback) throws StaleProxyException {
+    public static AgentContainer run(ModelCallback callback) throws StaleProxyException {
         Runtime rt = Runtime.instance();
         rt.setCloseVM(true);
         Profile p = new ProfileImpl();
         p.setParameter(Profile.MAIN_HOST, "localhost");
         p.setParameter(Profile.MAIN_PORT, "10099");
-        rt.createMainContainer(p);
+        AgentContainer mainContainer = rt.createMainContainer(p);
         // separated container for agents
         AgentContainer agentContainer = rt.createAgentContainer(p);
 
@@ -47,6 +47,8 @@ public class JadeRunner {
         AgentController operator = agentContainer.createNewAgent("operator", OperatorAgent.class.getName(),
                 new Object[]{});
         operator.start();
+
+        return mainContainer;
     }
 
 }

@@ -5,14 +5,12 @@ import com.smorzhok.common.StatisticsMessageContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Vector;
 
 import jade.core.AID;
 import jade.core.Agent;
 import jade.lang.acl.ACLMessage;
-import jade.lang.acl.UnreadableException;
 import jade.proto.ContractNetInitiator;
 
 /**
