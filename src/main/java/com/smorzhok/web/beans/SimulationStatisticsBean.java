@@ -1,6 +1,6 @@
 package com.smorzhok.web.beans;
 
-import com.smorzhok.common.ModelCallback;
+import com.smorzhok.common.model.ModelCallback;
 import com.smorzhok.common.StatisticsMessageContent;
 import com.smorzhok.web.model.CountryStatisticsModel;
 

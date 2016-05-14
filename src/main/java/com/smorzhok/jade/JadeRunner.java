@@ -1,11 +1,13 @@
 package com.smorzhok.jade;
 
-import com.smorzhok.common.DefaultModelParams;
-import com.smorzhok.common.ModelCallback;
-import com.smorzhok.common.ModelParams;
-import com.smorzhok.jade.agent.OperatorAgent;
+import com.smorzhok.common.ContextHolder;
+import com.smorzhok.common.entity.ModelParam;
+import com.smorzhok.common.model.ModelCallback;
+import com.smorzhok.common.model.ModelParamsFactory;
+import com.smorzhok.jade.agent.AgentFactory;
 import com.smorzhok.jade.agent.StatisticsAgent;
-import com.smorzhok.jade.agent.TouristAgent;
+
+import java.util.List;
 
 import jade.core.Profile;
 import jade.core.ProfileImpl;
@@ -22,11 +24,14 @@ import jade.wrapper.StaleProxyException;
  */
 public class JadeRunner {
 
+    private static ModelParamsFactory modelParamsFactory =
+            (ModelParamsFactory) ContextHolder.instance().getBean("modelParamsFactory");
+
     public static void main(String[] args) throws StaleProxyException {
-        run(new DefaultModelParams(), null);
+        run(modelParamsFactory.defaultModelParams(), null);
     }
 
-    public static AgentContainer run(ModelParams params, ModelCallback callback) throws StaleProxyException {
+    public static AgentContainer run(ModelParam params, ModelCallback callback) throws StaleProxyException {
         Runtime rt = Runtime.instance();
         rt.setCloseVM(true);
         Profile p = new ProfileImpl();
@@ -40,15 +45,12 @@ public class JadeRunner {
                 new Object[] { callback });
         statistics.start();
 
-        for (int i = 0; i < params.getTouristAmount(); i++) {
-            AgentController agent = agentContainer.createNewAgent("tourist" + i, TouristAgent.class.getName(),
-                    new Object[]{ params });
-            agent.start();
+        List<AgentController> touristAgents = AgentFactory.touristAgents(agentContainer, params);
+        List<AgentController> operatorAgents = AgentFactory.operatorAgents(agentContainer, params);
+        for (AgentController tourist : touristAgents) {
+            tourist.start();
         }
-
-        for (int i = 0; i < params.getOperatorAmount(); i++) {
-            AgentController operator = agentContainer.createNewAgent("operator" + i, OperatorAgent.class.getName(),
-                    new Object[]{ params });
+        for (AgentController operator : operatorAgents) {
             operator.start();
         }
 

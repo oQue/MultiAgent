@@ -28,8 +28,13 @@ public class SelectionServiceImpl implements SelectionService {
     }
 
     @Override
-    public <T extends DataObject> void deleteById(Class<T> clazz, Long id) {
+    public <T extends DataObject> void deleteById(Class<T> clazz, long id) {
         selectionDao.deleteById(clazz, id);
+    }
+
+    @Override
+    public <T extends DataObject> T getObjectById(Class<T> clazz, long id) {
+        return selectionDao.getObjectById(clazz, id);
     }
 
     @Override

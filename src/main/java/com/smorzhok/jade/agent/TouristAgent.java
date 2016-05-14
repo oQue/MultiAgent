@@ -1,6 +1,5 @@
 package com.smorzhok.jade.agent;
 
-import com.smorzhok.common.ModelParams;
 import com.smorzhok.jade.behavior.RequestPerformer;
 
 import org.slf4j.Logger;
@@ -44,8 +43,7 @@ public class TouristAgent extends Agent {
 
     private static final Random RANDOM = new Random();
 
-    private ModelParams params;
-
+    private int operatorsAmount;
     private double income;
     private double balance = 0.0;
     private double holidayDays = 0.0;
@@ -54,9 +52,9 @@ public class TouristAgent extends Agent {
     protected void setup() {
         LOGGER.debug("Tourist setup: " + getAID().getName());
         Object[] args = getArguments();
-        if (args != null && args.length == 1) {
-            params = (ModelParams) args[0];
-            income = params.getAverageSalary();
+        if (args != null && args.length == 2) {
+            operatorsAmount = (Integer) args[0];
+            income = (Double) args[1];
             LOGGER.info("Monthly income: " + income + ". Current balance: " + balance);
             addBehaviour(new TickerBehaviour(this, VACATION_PERIOD) {
                 @Override
@@ -80,7 +78,6 @@ public class TouristAgent extends Agent {
 
     private void startNegotiations() {
         ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
-        int operatorsAmount = params.getOperatorAmount();
         for (int i = 0; i < operatorsAmount; ++i) {
             cfp.addReceiver(new AID("operator" + i, AID.ISLOCALNAME));
         }

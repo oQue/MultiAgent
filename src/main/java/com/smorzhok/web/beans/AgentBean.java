@@ -1,6 +1,7 @@
 package com.smorzhok.web.beans;
 
-import com.smorzhok.common.DefaultModelParams;
+import com.smorzhok.common.ContextHolder;
+import com.smorzhok.common.model.ModelParamsFactory;
 import com.smorzhok.jade.JadeRunner;
 import com.smorzhok.web.helper.Helper;
 
@@ -26,6 +27,9 @@ public class AgentBean implements Serializable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AgentBean.class);
 
+    private ModelParamsFactory modelParamsFactory =
+            (ModelParamsFactory) ContextHolder.instance().getBean("modelParamsFactory");
+
     @ManagedProperty(value = "#{statisticsBean}")
     private SimulationStatisticsBean statisticsBean;
     private String sessionId;
@@ -45,7 +49,7 @@ public class AgentBean implements Serializable {
         statisticsBean.setRenderer(renderer);
         statisticsBean.setSessionId(sessionId);
         statisticsBean.reset();
-        container = JadeRunner.run(new DefaultModelParams(), statisticsBean);
+        container = JadeRunner.run(modelParamsFactory.defaultModelParams(), statisticsBean);
     }
 
     public void stopSimulation() throws StaleProxyException {

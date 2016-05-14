@@ -1,7 +1,5 @@
 package com.smorzhok.common.entity;
 
-import com.smorzhok.common.ModelParams;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +11,7 @@ import javax.persistence.Id;
  * @author Dmitry Smorzhok
  */
 @Entity
-public class CustomModelParam implements DataObject, ModelParams {
+public class ModelParam implements DataObject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,7 +31,6 @@ public class CustomModelParam implements DataObject, ModelParams {
         this.id = id;
     }
 
-    @Override
     public int getTouristAmount() {
         return touristAmount;
     }
@@ -42,7 +39,6 @@ public class CustomModelParam implements DataObject, ModelParams {
         this.touristAmount = touristAmount;
     }
 
-    @Override
     public int getOperatorAmount() {
         return operatorAmount;
     }
@@ -51,7 +47,6 @@ public class CustomModelParam implements DataObject, ModelParams {
         this.operatorAmount = operatorAmount;
     }
 
-    @Override
     public double getAverageSalary() {
         return averageSalary;
     }

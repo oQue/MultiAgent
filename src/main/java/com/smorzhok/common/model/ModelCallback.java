@@ -1,4 +1,6 @@
-package com.smorzhok.common;
+package com.smorzhok.common.model;
+
+import com.smorzhok.common.StatisticsMessageContent;
 
 /**
  * Callback object for model

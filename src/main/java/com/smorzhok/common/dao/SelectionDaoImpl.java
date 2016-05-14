@@ -54,6 +54,13 @@ public class SelectionDaoImpl implements SelectionDao {
     }
 
     @Override
+    public <T extends DataObject> T getObjectById(Class<T> clazz, long id) {
+        DetachedCriteria criteria = DetachedCriteria.forClass(clazz);
+        criteria.add(Restrictions.idEq(id));
+        return getObjectByQuery(criteria);
+    }
+
+    @Override
     public <T extends DataObject> List<T> getAll(Class<T> clazz) {
         DetachedCriteria criteria = DetachedCriteria.forClass(clazz);
         return get(criteria);

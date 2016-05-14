@@ -1,6 +1,6 @@
 package com.smorzhok.jade.agent;
 
-import com.smorzhok.common.ModelCallback;
+import com.smorzhok.common.model.ModelCallback;
 import com.smorzhok.common.StatisticsMessageContent;
 
 import org.slf4j.Logger;
