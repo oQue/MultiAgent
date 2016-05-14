@@ -15,6 +15,10 @@
         <ice.version>3.3.0</ice.version>
         <compiler.plugins.version>2.0.2</compiler.plugins.version>
         <mojarra.version>2.1.21</mojarra.version>
+        <hibernate.version>4.3.10.Final</hibernate.version>
+        <postgre.version>9.1-901.jdbc4</postgre.version>
+        <spring.data.version>1.8.1.RELEASE</spring.data.version>
+        <dbcp.version>1.4</dbcp.version>
     </properties>
 
     <repositories>
@@ -86,6 +90,32 @@
             <artifactId>jsr250-api</artifactId>
             <version>1.0</version>
             <scope>provided</scope>
+        </dependency>
+        <!-- Database -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgre.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>${spring.data.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>${dbcp.version}</version>
         </dependency>
     </dependencies>
 
