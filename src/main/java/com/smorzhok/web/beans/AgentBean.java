@@ -1,5 +1,6 @@
 package com.smorzhok.web.beans;
 
+import com.smorzhok.common.DefaultModelParams;
 import com.smorzhok.jade.JadeRunner;
 import com.smorzhok.web.helper.Helper;
 
@@ -44,7 +45,7 @@ public class AgentBean implements Serializable {
         statisticsBean.setRenderer(renderer);
         statisticsBean.setSessionId(sessionId);
         statisticsBean.reset();
-        container = JadeRunner.run(statisticsBean);
+        container = JadeRunner.run(new DefaultModelParams(), statisticsBean);
     }
 
     public void stopSimulation() throws StaleProxyException {

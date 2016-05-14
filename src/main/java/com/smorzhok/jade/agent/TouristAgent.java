@@ -1,10 +1,12 @@
 package com.smorzhok.jade.agent;
 
+import com.smorzhok.common.ModelParams;
 import com.smorzhok.jade.behavior.RequestPerformer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
@@ -42,18 +44,19 @@ public class TouristAgent extends Agent {
 
     private static final Random RANDOM = new Random();
 
+    private ModelParams params;
+
     private double income;
-    private double balance;
-    private double holidayDays;
+    private double balance = 0.0;
+    private double holidayDays = 0.0;
 
     @Override
     protected void setup() {
         LOGGER.debug("Tourist setup: " + getAID().getName());
         Object[] args = getArguments();
-        if (args != null && args.length == 3) {
-            income = Double.parseDouble((String) args[0]);
-            balance = Double.parseDouble((String) args[1]);
-            holidayDays = Double.parseDouble((String) args[2]);
+        if (args != null && args.length == 1) {
+            params = (ModelParams) args[0];
+            income = params.getAverageSalary();
             LOGGER.info("Monthly income: " + income + ". Current balance: " + balance);
             addBehaviour(new TickerBehaviour(this, VACATION_PERIOD) {
                 @Override
@@ -70,17 +73,17 @@ public class TouristAgent extends Agent {
                 }
             });
         } else {
-            LOGGER.warn("Wrong args: " + args);
+            LOGGER.warn("Wrong args: " + Arrays.toString(args));
             doDelete();
         }
     }
 
     private void startNegotiations() {
         ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
-//        for (int i = 0; i < sellerAgents.length; ++i) {
-//            cfp.addReceiver(sellerAgents[i]);
-//        }
-        cfp.addReceiver(new AID("operator", AID.ISLOCALNAME));
+        int operatorsAmount = params.getOperatorAmount();
+        for (int i = 0; i < operatorsAmount; ++i) {
+            cfp.addReceiver(new AID("operator" + i, AID.ISLOCALNAME));
+        }
         cfp.setContent("France"); // TODO
         cfp.setConversationId("tour-request");
         cfp.setReplyWith(UUID.randomUUID().toString());
