@@ -22,6 +22,15 @@ public enum TouristType {
 
     public static final TouristType values[] = values();
 
+    public static TouristType fromString(String name) {
+        for (TouristType type : values) {
+            if (type.getName().equals(name)) {
+                return type;
+            }
+        }
+        throw new IllegalArgumentException("No tourist type with name \"" + name + "\" found");
+    }
+
     private String name;
 
     TouristType(String name) {

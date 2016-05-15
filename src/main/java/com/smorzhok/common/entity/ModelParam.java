@@ -1,5 +1,7 @@
 package com.smorzhok.common.entity;
 
+import org.springframework.util.CollectionUtils;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,6 +34,8 @@ public class ModelParam implements DataObject {
 
     private double minimumSalary;
 
+    private double eurCurrencyRate;
+
     @OneToMany
     private Set<CountryParam> countryParams = new HashSet<>();
 
@@ -39,7 +43,13 @@ public class ModelParam implements DataObject {
     private volatile Set<String> countries;
 
     @Transient
-    private final Object monitor = new Object();
+    private final Object countryMonitor = new Object();
+
+    @Transient
+    private volatile double averagePricePerDay = -1;
+
+    @Transient
+    private final Object priceMonitor = new Object();
 
     public Long getId() {
         return id;
@@ -98,6 +108,17 @@ public class ModelParam implements DataObject {
         this.minimumSalary = minimumSalary;
     }
 
+    public double getEurCurrencyRate() {
+        if (eurCurrencyRate < 0) {
+            throw new IllegalArgumentException("Minimum salary can't be below zero");
+        }
+        return eurCurrencyRate;
+    }
+
+    public void setEurCurrencyRate(double eurCurrencyRate) {
+        this.eurCurrencyRate = eurCurrencyRate;
+    }
+
     public Set<CountryParam> getCountryParams() {
         return countryParams;
     }
@@ -108,10 +129,10 @@ public class ModelParam implements DataObject {
 
     public Set<String> getCountries() {
         Set<String> countryList = countries;
-        if (countryList == null) {
-            synchronized (monitor) {
+        if (CollectionUtils.isEmpty(countryList) && !countryParams.isEmpty()) {
+            synchronized (countryMonitor) {
                 countryList = countries;
-                if (countryList == null) {
+                if (CollectionUtils.isEmpty(countryList)) {
                     countryList = new HashSet<>(countryParams.size());
                     for (CountryParam countryParam : countryParams) {
                         countryList.add(countryParam.getCountry().getName());
@@ -121,5 +142,29 @@ public class ModelParam implements DataObject {
             }
         }
         return countryList;
+    }
+
+    public double getAveragePricePerDay() {
+        double price = averagePricePerDay;
+        if (price == -1 && !countryParams.isEmpty()) {
+            synchronized (priceMonitor) {
+                price = averagePricePerDay;
+                if (price == -1) {
+                    for (CountryParam param : countryParams) {
+                        if (price == -1) {
+                            price = param.getAveragePricePerDay();
+                        }
+                        price += param.getAveragePricePerDay();
+                    }
+                }
+                price /= countryParams.size();
+                averagePricePerDay = price;
+            }
+        }
+        if (price == -1) {
+            price = 0;
+            averagePricePerDay = price;
+        }
+        return price;
     }
 }

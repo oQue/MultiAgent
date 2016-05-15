@@ -48,15 +48,17 @@ public class TouristAgent extends Agent {
     private double income;
     private volatile double balance;
     private volatile double holidayDays;
+    private double eurCurrencyRate;
 
     @Override
     protected void setup() {
         LOGGER.debug("Tourist setup: " + getAID().getName());
         Object[] args = getArguments();
-        if (args != null && args.length == 3) {
+        if (args != null && args.length == 4) {
             operatorsAmount = (Integer) args[0];
             income = (Double) args[1];
             type = (String) args[2];
+            eurCurrencyRate = (Double) args[3];
             balance = income * RANDOM.nextInt(2);
             holidayDays = RANDOM.nextInt(20);
             LOGGER.debug("Monthly income: " + income + ". Current balance: " + balance +
@@ -124,6 +126,7 @@ public class TouristAgent extends Agent {
     }
 
     public synchronized boolean buyTour(double price, int duration) {
+        price *= eurCurrencyRate;
         if (price > balance) {
             LOGGER.warn("Attempt to by a tour for " + price + " while having " + balance + " at balance");
             return false;

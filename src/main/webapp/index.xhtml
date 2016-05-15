@@ -3,8 +3,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:ace="http://www.icefaces.org/icefaces/components">
 <h:head>
     <title>Multiagent System Simulation</title>
 </h:head>
@@ -12,20 +11,17 @@
     <h:form>
         <h:commandButton value="Run Simulation" action="#{agentBean.runSimulation}" style="color: white; background-color: green;"/>
         <h:commandButton value="Stop Simulation" action="#{agentBean.stopSimulation}" style="color: white; background-color: red;"/>
+        <ace:dataTable value="#{statisticsBean.list}" var="element">
+            <ace:column sortBy="#{element.country}" headerText="Country">
+                <h:outputText value="#{element.country}"/>
+            </ace:column>
+            <ace:column sortBy="#{element.toursBought}" headerText="Total tours bought">
+                <h:outputText value="#{element.toursBought}"/>
+            </ace:column>
+            <ace:column sortBy="#{element.averagePrice}" headerText="Average Price">
+                <h:outputText value="#{element.averagePriceAsString}"/>
+            </ace:column>
+        </ace:dataTable>
     </h:form>
-    <h:dataTable value="#{statisticsBean.list}" var="element">
-        <h:column>
-            <f:facet name="header">Country</f:facet>
-            #{element.country}
-        </h:column>
-        <h:column>
-            <f:facet name="header">Total tours bought</f:facet>
-            #{element.toursBought}
-        </h:column>
-        <h:column>
-            <f:facet name="header">Average Price</f:facet>
-            #{element.averagePrice}
-        </h:column>
-    </h:dataTable>
 </h:body>
 </html>

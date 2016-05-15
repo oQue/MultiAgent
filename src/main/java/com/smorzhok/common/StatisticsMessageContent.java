@@ -15,10 +15,13 @@ public class StatisticsMessageContent implements Serializable {
 
     private int duration;
 
-    public StatisticsMessageContent(double price, String country, int duration) {
+    private double popularity;
+
+    public StatisticsMessageContent(double price, String country, int duration, double popularity) {
         this.price = price;
         this.country = country;
         this.duration = duration;
+        this.popularity = popularity;
     }
 
     public double getPrice() {
@@ -31,5 +34,9 @@ public class StatisticsMessageContent implements Serializable {
 
     public int getDuration() {
         return duration;
+    }
+
+    public double getPopularity() {
+        return popularity;
     }
 }

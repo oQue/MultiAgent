@@ -37,7 +37,7 @@ public final class AgentFactory {
             double agentSalary = generateAgentSalary(params);
             TouristType type = assignTouristType(params, agentSalary);
             AgentController tourist = container.createNewAgent("tourist" + i, TouristAgent.class.getName(),
-                    new Object[]{ params.getOperatorAmount(), agentSalary, type.getName() });
+                    new Object[]{ params.getOperatorAmount(), agentSalary, type.getName(), params.getEurCurrencyRate() });
             agents.add(tourist);
         }
         return agents;

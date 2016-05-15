@@ -51,7 +51,7 @@ public class RequestPerformer extends ContractNetInitiator {
                 if (content == null) {
                     continue;
                 }
-                double proposal = content.getPrice();
+                double proposal = content.getPrice() / content.getPopularity();
                 if (bestProposal == null || proposal < bestProposal) {
                     bestProposal = proposal;
                     bestProposer = msg.getSender();
@@ -86,7 +86,10 @@ public class RequestPerformer extends ContractNetInitiator {
             ACLMessage message = new ACLMessage(ACLMessage.INFORM);
             message.addReceiver(new AID("statistics", AID.ISLOCALNAME));
             try {
-                message.setContentObject(inform.getContentObject());
+                double pricePerDay = price / duration;
+                StatisticsMessageContent statisticsMessageContent =
+                        new StatisticsMessageContent(pricePerDay, content.getCountry(), content.getDuration(), content.getPopularity());
+                message.setContentObject(statisticsMessageContent);
             } catch (Exception ex) {
                 LOGGER.error("Failed to set content: ", ex);
             }

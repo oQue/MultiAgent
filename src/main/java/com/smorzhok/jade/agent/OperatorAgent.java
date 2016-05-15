@@ -1,10 +1,13 @@
 package com.smorzhok.jade.agent;
 
+import com.smorzhok.common.entity.ModelParam;
 import com.smorzhok.jade.behavior.OfferRequestsServer;
 import com.smorzhok.jade.behavior.PurchaseOfferServer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Arrays;
 
 import jade.core.Agent;
 
@@ -19,7 +22,16 @@ public class OperatorAgent extends Agent {
 
     @Override
     protected void setup() {
-        addBehaviour(new OfferRequestsServer());
+        Object[] args = getArguments();
+        ModelParam modelParam;
+        if (args != null && args.length == 1) {
+            modelParam = (ModelParam) args[0];
+        } else {
+            LOGGER.warn("Wrong args: " + Arrays.toString(args));
+            doDelete();
+            return;
+        }
+        addBehaviour(new OfferRequestsServer(modelParam));
         addBehaviour(new PurchaseOfferServer());
     }
 

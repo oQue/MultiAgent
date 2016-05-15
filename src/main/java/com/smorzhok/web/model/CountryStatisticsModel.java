@@ -38,6 +38,10 @@ public class CountryStatisticsModel {
         return averagePrice;
     }
 
+    public String getAveragePriceAsString() {
+        return String.format("%.2f", averagePrice);
+    }
+
     public int getToursBought() {
         return toursBought;
     }

@@ -45,13 +45,14 @@ public class JadeRunner {
                 new Object[] { callback });
         statistics.start();
 
-        List<AgentController> touristAgents = AgentFactory.touristAgents(agentContainer, params);
         List<AgentController> operatorAgents = AgentFactory.operatorAgents(agentContainer, params);
-        for (AgentController tourist : touristAgents) {
-            tourist.start();
-        }
         for (AgentController operator : operatorAgents) {
             operator.start();
+        }
+
+        List<AgentController> touristAgents = AgentFactory.touristAgents(agentContainer, params);
+        for (AgentController tourist : touristAgents) {
+            tourist.start();
         }
 
         return mainContainer;
