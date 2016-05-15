@@ -1,12 +1,17 @@
 package com.smorzhok.common.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 /**
- * Model Parameters Holder
+ * Model Parameters
  *
  * @author Dmitry Smorzhok
  */
@@ -22,6 +27,15 @@ public class ModelParam implements DataObject {
     private int operatorAmount;
 
     private double averageSalary;
+
+    @OneToMany
+    private Set<CountryParam> countryParams = new HashSet<>();
+
+    @Transient
+    private volatile Set<String> countries;
+
+    @Transient
+    private final Object monitor = new Object();
 
     public Long getId() {
         return id;
@@ -53,5 +67,30 @@ public class ModelParam implements DataObject {
 
     public void setAverageSalary(double averageSalary) {
         this.averageSalary = averageSalary;
+    }
+
+    public Set<CountryParam> getCountryParams() {
+        return countryParams;
+    }
+
+    public void setCountryParams(Set<CountryParam> countryParams) {
+        this.countryParams = countryParams;
+    }
+
+    public Set<String> getCountries() {
+        Set<String> countryList = countries;
+        if (countryList == null) {
+            synchronized (monitor) {
+                countryList = countries;
+                if (countryList == null) {
+                    countryList = new HashSet<>(countryParams.size());
+                    for (CountryParam countryParam : countryParams) {
+                        countryList.add(countryParam.getCountry().getName());
+                    }
+                    countries = countryList;
+                }
+            }
+        }
+        return countryList;
     }
 }
