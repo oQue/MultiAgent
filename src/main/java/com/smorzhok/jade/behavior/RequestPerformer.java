@@ -51,7 +51,8 @@ public class RequestPerformer extends ContractNetInitiator {
                 if (content == null) {
                     continue;
                 }
-                double proposal = content.getPrice() / content.getPopularity();
+                double proposal = content.getPrice() / content.getDuration();
+                proposal /=  content.getPopularity();
                 if (bestProposal == null || proposal < bestProposal) {
                     bestProposal = proposal;
                     bestProposer = msg.getSender();
