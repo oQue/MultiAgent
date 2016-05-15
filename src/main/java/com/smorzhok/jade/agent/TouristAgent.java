@@ -43,19 +43,24 @@ public class TouristAgent extends Agent {
 
     private static final Random RANDOM = new Random();
 
+    private String type;
     private int operatorsAmount;
     private double income;
-    private double balance = 0.0;
-    private double holidayDays = 0.0;
+    private volatile double balance;
+    private volatile double holidayDays;
 
     @Override
     protected void setup() {
         LOGGER.debug("Tourist setup: " + getAID().getName());
         Object[] args = getArguments();
-        if (args != null && args.length == 2) {
+        if (args != null && args.length == 3) {
             operatorsAmount = (Integer) args[0];
             income = (Double) args[1];
-            LOGGER.info("Monthly income: " + income + ". Current balance: " + balance);
+            type = (String) args[2];
+            balance = income * RANDOM.nextInt(2);
+            holidayDays = RANDOM.nextInt(20);
+            LOGGER.debug("Monthly income: " + income + ". Current balance: " + balance +
+                    ". Type: " + type + ". Holiday days: " + holidayDays);
             addBehaviour(new TickerBehaviour(this, VACATION_PERIOD) {
                 @Override
                 protected void onTick() {
@@ -81,7 +86,7 @@ public class TouristAgent extends Agent {
         for (int i = 0; i < operatorsAmount; ++i) {
             cfp.addReceiver(new AID("operator" + i, AID.ISLOCALNAME));
         }
-        cfp.setContent("France"); // TODO
+        cfp.setContent(type);
         cfp.setConversationId("tour-request");
         cfp.setReplyWith(UUID.randomUUID().toString());
         cfp.setReplyByDate(new Date(System.currentTimeMillis() + 2000));
@@ -104,16 +109,31 @@ public class TouristAgent extends Agent {
                 spentThisMonth *= multiplier;
             }
         }
-        balance += income - spentThisMonth;
-        if (balance < 0) {
-            balance = 0;
+        synchronized (this) {
+            balance += income - spentThisMonth;
+            if (balance < 0) {
+                balance = 0;
+            }
+            holidayDays += HOLIDAY_PER_MONTH;
         }
-        holidayDays += HOLIDAY_PER_MONTH;
         LOGGER.debug("Current balance: " + balance + " (" + getAID().getName() + ")");
     }
 
     private boolean readyForVacation() {
         return holidayDays > SHORTEST_VACATION && balance > income * 3;
+    }
+
+    public synchronized boolean buyTour(double price, int duration) {
+        if (price > balance) {
+            LOGGER.warn("Attempt to by a tour for " + price + " while having " + balance + " at balance");
+            return false;
+        } else if (duration > holidayDays) {
+            LOGGER.warn("Attempt to by a tour for " + duration + " days while having " + holidayDays + " holiday days");
+            return false;
+        }
+        this.balance -= price;
+        this.holidayDays -= duration;
+        return true;
     }
 
 }

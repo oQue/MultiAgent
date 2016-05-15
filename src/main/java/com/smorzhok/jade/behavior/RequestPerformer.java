@@ -1,6 +1,7 @@
 package com.smorzhok.jade.behavior;
 
 import com.smorzhok.common.StatisticsMessageContent;
+import com.smorzhok.jade.agent.TouristAgent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,15 +69,29 @@ public class RequestPerformer extends ContractNetInitiator {
 
     @Override
     protected void handleInform(ACLMessage inform) {
-        LOGGER.info("Agent " + myAgent.getName() + " just bought a tour!");
-        ACLMessage message = new ACLMessage(ACLMessage.INFORM);
-        message.addReceiver(new AID("statistics", AID.ISLOCALNAME));
+        StatisticsMessageContent content;
         try {
-            message.setContentObject(inform.getContentObject());
+            content = (StatisticsMessageContent) inform.getContentObject();
         } catch (Exception ex) {
-            LOGGER.error("Failed to set content: ", ex);
+            LOGGER.error("Couldn't read message content: ", ex);
+            return;
         }
-        myAgent.send(message);
+        String country = content.getCountry();
+        double price = content.getPrice();
+        int duration = content.getDuration();
+        boolean success = ((TouristAgent) myAgent).buyTour(price, duration);
+        if (success) {
+            LOGGER.info("Agent " + myAgent.getName() + " just bought a tour to " + country +
+                    " (duration: " + duration + "; price: " + price + ")");
+            ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+            message.addReceiver(new AID("statistics", AID.ISLOCALNAME));
+            try {
+                message.setContentObject(inform.getContentObject());
+            } catch (Exception ex) {
+                LOGGER.error("Failed to set content: ", ex);
+            }
+            myAgent.send(message);
+        }
     }
 
 }

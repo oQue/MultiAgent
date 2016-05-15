@@ -28,6 +28,10 @@ public class ModelParam implements DataObject {
 
     private double averageSalary;
 
+    private double salaryDeviation;
+
+    private double minimumSalary;
+
     @OneToMany
     private Set<CountryParam> countryParams = new HashSet<>();
 
@@ -66,7 +70,32 @@ public class ModelParam implements DataObject {
     }
 
     public void setAverageSalary(double averageSalary) {
+        if (averageSalary < 0) {
+            throw new IllegalArgumentException("Average salary can't be below zero");
+        }
         this.averageSalary = averageSalary;
+    }
+
+    public double getSalaryDeviation() {
+        return salaryDeviation;
+    }
+
+    public void setSalaryDeviation(double salaryDeviation) {
+        if (salaryDeviation < 0) {
+            throw new IllegalArgumentException("Salary deviation can't be below zero");
+        }
+        this.salaryDeviation = salaryDeviation;
+    }
+
+    public double getMinimumSalary() {
+        return minimumSalary;
+    }
+
+    public void setMinimumSalary(double minimumSalary) {
+        if (minimumSalary < 0) {
+            throw new IllegalArgumentException("Minimum salary can't be below zero");
+        }
+        this.minimumSalary = minimumSalary;
     }
 
     public Set<CountryParam> getCountryParams() {

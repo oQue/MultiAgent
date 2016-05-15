@@ -25,12 +25,13 @@ public class OfferRequestsServer extends CyclicBehaviour {
         MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.CFP);
         ACLMessage message = myAgent.receive(mt);
         if (message != null) {
-            String country = message.getContent();
             ACLMessage reply = message.createReply();
-            double price = 0.0; // TODO
+            String country = "country"; // TODO
+            double price = 35000.0; // TODO
+            int duration = 7; // TODO
             reply.setPerformative(ACLMessage.PROPOSE);
             try {
-                reply.setContentObject(new StatisticsMessageContent(price, country));
+                reply.setContentObject(new StatisticsMessageContent(price, country, duration));
             } catch (IOException ex) {
                 LOGGER.error("Couldn't set message content: ", ex);
             }

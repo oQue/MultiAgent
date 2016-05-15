@@ -13,9 +13,12 @@ public class StatisticsMessageContent implements Serializable {
 
     private String country;
 
-    public StatisticsMessageContent(double price, String country) {
+    private int duration;
+
+    public StatisticsMessageContent(double price, String country, int duration) {
         this.price = price;
         this.country = country;
+        this.duration = duration;
     }
 
     public double getPrice() {
@@ -24,5 +27,9 @@ public class StatisticsMessageContent implements Serializable {
 
     public String getCountry() {
         return country;
+    }
+
+    public int getDuration() {
+        return duration;
     }
 }

@@ -31,6 +31,7 @@ public final class ModelParamsFactory {
     /**
      * Creates model filled with default parameters
      * Average salary defaults to Moscow, Russia (end of 2015) according to <a href="http://rg.ru/">rg.ru</a>
+     * Minimum salary defaults to Moscow, Russia (beginning of 2016) according to <a href="http://garant.ru/">garant.ru</a>
      * Attractiveness coefficient is calculated by <a href="http://data.worldbank.org/indicator/ST.INT.ARVL">tourist flow stats</a>
      * France as a flow leader is taken as 1.0. Others coefficients are calculated as (Country Flow) / (France flow)
      * Average Price statistics are taken from <a href="http://www.budgetyourtrip.com/">Budget your trip</a>
@@ -43,6 +44,8 @@ public final class ModelParamsFactory {
         params.setTouristAmount(10);
         params.setOperatorAmount(1);
         params.setAverageSalary(59000.00);
+        params.setMinimumSalary(17300.00);
+        params.setSalaryDeviation(30000.00);
 
         CountryParam countryParam = new CountryParam();
         Country country = new Country();
