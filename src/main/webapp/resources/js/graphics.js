@@ -167,7 +167,7 @@ function drawPie() {
 
     pie = d3.layout.pie()
         .value(function(d) { return d["toursBought"]; })
-        .sort(null);
+        .sort(function(a, b) { return d3.descending(a.toursBought, b.toursBought); });
 
     pieArc = d3.svg.arc()
         .outerRadius(radius)
