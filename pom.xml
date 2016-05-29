@@ -61,6 +61,11 @@
             <artifactId>icepush</artifactId>
             <version>${ice.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.icefaces</groupId>
+            <artifactId>icefaces-compat</artifactId>
+            <version>${ice.version}</version>
+        </dependency>
         <!-- Servlet -->
         <dependency>
             <groupId>javax.servlet</groupId>
