@@ -7,12 +7,14 @@ import com.smorzhok.web.helper.Helper;
 
 import org.icefaces.application.PortableRenderer;
 import org.icefaces.application.PushRenderer;
+import org.icefaces.util.JavaScriptRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import jade.util.leap.Serializable;
 import jade.wrapper.AgentContainer;
@@ -50,6 +52,7 @@ public class AgentBean implements Serializable {
         statisticsBean.setSessionId(sessionId);
         statisticsBean.reset();
         container = JadeRunner.run(modelParamsFactory.defaultModelParams(), statisticsBean);
+        JavaScriptRunner.runScript(FacesContext.getCurrentInstance(), "startUpdating()");
     }
 
     public void stopSimulation() throws StaleProxyException {
@@ -57,6 +60,7 @@ public class AgentBean implements Serializable {
             container.kill();
             container = null;
         }
+        JavaScriptRunner.runScript(FacesContext.getCurrentInstance(), "abortTimer()");
     }
 
 }

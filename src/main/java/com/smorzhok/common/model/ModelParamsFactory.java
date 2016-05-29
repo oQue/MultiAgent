@@ -58,307 +58,59 @@ public final class ModelParamsFactory {
                     params.setSalaryDeviation(30000.00);
                     params.setEurCurrencyRate(73.73);
 
-                    CountryParam countryParam = new CountryParam();
-                    Country country = new Country();
-                    country.setName("Albania");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(47.46);
-                    countryParam.setAttractivenessCoefficient(0.04);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Andorra");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(20.00);
-                    countryParam.setAttractivenessCoefficient(0.03);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Austria");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(97.75);
-                    countryParam.setAttractivenessCoefficient(0.08);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Belarus");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(18.52);
-                    countryParam.setAttractivenessCoefficient(0.002);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Belgium");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(18.52);
-                    countryParam.setAttractivenessCoefficient(0.09);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Bosnia and Herzegovina");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(53.59);
-                    countryParam.setAttractivenessCoefficient(0.006);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Bulgaria");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(43.03);
-                    countryParam.setAttractivenessCoefficient(0.09);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Croatia");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(65.11);
-                    countryParam.setAttractivenessCoefficient(0.14);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Cyprus");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(77.00);
-                    countryParam.setAttractivenessCoefficient(0.03);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Czech Republic");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(70.25);
-                    countryParam.setAttractivenessCoefficient(0.13);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Denmark");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(114.81);
-                    countryParam.setAttractivenessCoefficient(0.12);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Estonia");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(51.91);
-                    countryParam.setAttractivenessCoefficient(0.03);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Finland");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(114.66);
-                    countryParam.setAttractivenessCoefficient(0.05);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("France");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(148.71);
-                    countryParam.setAttractivenessCoefficient(1.0);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Germany");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(96.81);
-                    countryParam.setAttractivenessCoefficient(0.39);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Greece");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(123.21);
-                    countryParam.setAttractivenessCoefficient(0.26);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Hungary");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(91.86);
-                    countryParam.setAttractivenessCoefficient(0.14);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Iceland");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(210.39);
-                    countryParam.setAttractivenessCoefficient(0.01);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Italy");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(119.31);
-                    countryParam.setAttractivenessCoefficient(0.58);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Latvia");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(46.56);
-                    countryParam.setAttractivenessCoefficient(0.02);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Lithuania");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(66.97);
-                    countryParam.setAttractivenessCoefficient(0.02);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Luxembourg");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(147.79);
-                    countryParam.setAttractivenessCoefficient(0.01);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Malta");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(81.29);
-                    countryParam.setAttractivenessCoefficient(0.02);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Monaco");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(165.72);
-                    countryParam.setAttractivenessCoefficient(0.004);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Montenegro");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(60.11);
-                    countryParam.setAttractivenessCoefficient(0.02);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Netherlands");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(119.29);
-                    countryParam.setAttractivenessCoefficient(0.17);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Norway");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(100.88);
-                    countryParam.setAttractivenessCoefficient(0.06);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Poland");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(50.61);
-                    countryParam.setAttractivenessCoefficient(0.19);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Portugal");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(82.82);
-                    countryParam.setAttractivenessCoefficient(0.11);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Republic of Ireland");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(96.87);
-                    countryParam.setAttractivenessCoefficient(0.11);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Republic of Macedonia");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(72.15);
-                    countryParam.setAttractivenessCoefficient(0.005);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Serbia");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(24.32);
-                    countryParam.setAttractivenessCoefficient(0.01);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Slovenia");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(74.59);
-                    countryParam.setAttractivenessCoefficient(0.03);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Spain");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(90.35);
-                    countryParam.setAttractivenessCoefficient(0.78);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Sweden");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(122.24);
-                    countryParam.setAttractivenessCoefficient(0.07);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("Switzerland");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(157.42);
-                    countryParam.setAttractivenessCoefficient(0.11);
-                    params.getCountryParams().add(countryParam);
-
-                    countryParam = new CountryParam();
-                    country = new Country();
-                    country.setName("United Kingdom");
-                    countryParam.setCountry(country);
-                    countryParam.setAveragePricePerDay(143.80);
-                    countryParam.setAttractivenessCoefficient(0.39);
-                    params.getCountryParams().add(countryParam);
+                    addCountry(params, "Albania", 47.46, 0.04);
+                    addCountry(params, "Andorra", 20.00, 0.03);
+                    addCountry(params, "Austria", 97.75, 0.08);
+                    addCountry(params, "Belarus", 18.52, 0.002);
+                    addCountry(params, "Belgium", 106.62, 0.09);
+                    addCountry(params, "Bosnia and Herzegovina", 53.59, 0.006);
+                    addCountry(params, "Bulgaria", 43.03, 0.09);
+                    addCountry(params, "Croatia", 65.11, 0.14);
+                    addCountry(params, "Cyprus", 77.00, 0.03);
+                    addCountry(params, "Czech Republic", 70.25, 0.13);
+                    addCountry(params, "Denmark", 114.81, 0.12);
+                    addCountry(params, "Estonia", 51.91, 0.03);
+                    addCountry(params, "Finland", 114.66, 0.05);
+                    addCountry(params, "France", 148.71, 1.0);
+                    addCountry(params, "Germany", 96.81, 0.39);
+                    addCountry(params, "Greece", 123.21, 0.26);
+                    addCountry(params, "Hungary", 91.86, 0.14);
+                    addCountry(params, "Iceland", 210.39, 0.01);
+                    addCountry(params, "Italy", 119.31, 0.58);
+                    addCountry(params, "Latvia", 46.56, 0.02);
+                    addCountry(params, "Lithuania", 66.97, 0.02);
+                    addCountry(params, "Luxembourg", 147.79, 0.01);
+                    addCountry(params, "Malta", 81.29, 0.02);
+                    addCountry(params, "Monaco", 165.72, 0.004);
+                    addCountry(params, "Montenegro", 60.11, 0.02);
+                    addCountry(params, "Netherlands", 119.29, 0.17);
+                    addCountry(params, "Norway", 100.88, 0.06);
+                    addCountry(params, "Poland", 50.61, 0.19);
+                    addCountry(params, "Portugal", 82.82, 0.11);
+                    addCountry(params, "Republic of Ireland", 96.87, 0.11);
+                    addCountry(params, "Republic of Macedonia", 72.15, 0.005);
+                    addCountry(params, "Serbia", 24.32, 0.01);
+                    addCountry(params, "Slovenia", 74.59, 0.03);
+                    addCountry(params, "Spain", 90.35, 0.78);
+                    addCountry(params, "Sweden", 122.24, 0.07);
+                    addCountry(params, "Switzerland", 157.42, 0.11);
+                    addCountry(params, "United Kingdom", 143.80, 0.39);
 
                     DEFAULT_MODEL = params;
                 }
             }
         }
         return params;
+    }
+
+    private void addCountry(ModelParam params, String name, double avgPrice, double attractiveness) {
+        CountryParam countryParam = new CountryParam();
+        Country country = new Country();
+        country.setName(name);
+        countryParam.setCountry(country);
+        countryParam.setAveragePricePerDay(avgPrice);
+        countryParam.setAttractivenessCoefficient(attractiveness);
+        params.getCountryParams().add(countryParam);
     }
 
 }

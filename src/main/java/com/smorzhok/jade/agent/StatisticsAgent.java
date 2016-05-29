@@ -22,6 +22,8 @@ public class StatisticsAgent extends Agent {
 
     private ModelCallback callback;
 
+    private int totalToursBought = 0;
+
     @Override
     protected void setup() {
         super.setup();
@@ -42,6 +44,8 @@ public class StatisticsAgent extends Agent {
             if (message != null && callback != null) {
                 try {
                     StatisticsMessageContent content = (StatisticsMessageContent) message.getContentObject();
+                    totalToursBought++;
+                    content.setTotalToursBought(totalToursBought);
                     callback.update(content);
                 } catch (Exception e) {
                     LOGGER.error("Error while trying to update model: ", e);

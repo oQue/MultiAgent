@@ -17,7 +17,6 @@ import jade.wrapper.AgentController;
 import jade.wrapper.StaleProxyException;
 
 /**
- * Main class for local test purposes
  * Creates main container for Jade and populates it with agents
  *
  * @author Dmitry Smorzhok

@@ -17,6 +17,8 @@ public class StatisticsMessageContent implements Serializable {
 
     private double popularity;
 
+    private int totalToursBought;
+
     public StatisticsMessageContent(double price, String country, int duration, double popularity) {
         this.price = price;
         this.country = country;
@@ -38,5 +40,13 @@ public class StatisticsMessageContent implements Serializable {
 
     public double getPopularity() {
         return popularity;
+    }
+
+    public int getTotalToursBought() {
+        return totalToursBought;
+    }
+
+    public void setTotalToursBought(int totalToursBought) {
+        this.totalToursBought = totalToursBought;
     }
 }
