@@ -15,11 +15,9 @@
     </parent>
 
     <properties>
-        <jade.version>4.4.0</jade.version>
         <slf4j.version>1.7.10</slf4j.version>
         <ice.version>3.3.0</ice.version>
         <compiler.plugins.version>2.0.2</compiler.plugins.version>
-        <mojarra.version>2.1.21</mojarra.version>
         <hibernate.version>4.3.10.Final</hibernate.version>
         <postgre.version>9.1-901.jdbc4</postgre.version>
         <spring.data.version>1.8.1.RELEASE</spring.data.version>
@@ -34,12 +32,6 @@
     </repositories>
 
     <dependencies>
-        <!-- JADE -->
-        <dependency>
-            <groupId>com.tilab.jade</groupId>
-            <artifactId>jade</artifactId>
-            <version>${jade.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -133,9 +125,20 @@
             <artifactId>gson</artifactId>
             <version>2.6.2</version>
         </dependency>
+
         <dependency>
             <groupId>com.smorzhok.multiagent</groupId>
             <artifactId>sarl</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.smorzhok.multiagent</groupId>
+            <artifactId>jade</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.smorzhok.multiagent</groupId>
+            <artifactId>common</artifactId>
             <version>1.0</version>
         </dependency>
     </dependencies>

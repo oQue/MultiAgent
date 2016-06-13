@@ -9,26 +9,10 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>web</module>
+        <module>common</module>
+        <module>jade</module>
         <module>sarl</module>
+        <module>web</module>
     </modules>
-
-    <!-- TODO remove -->
-
-    <properties>
-        <sarl.version>0.3.1</sarl.version>
-        <janus.version>2.0.3.1</janus.version>
-    </properties>
-
-    <dependencies>
-        <!-- Sarl / Janus -->
-        <dependency>
-            <groupId>io.janusproject</groupId>
-            <artifactId>io.janusproject.kernel</artifactId>
-            <version>${janus.version}</version>
-        </dependency>
-    </dependencies>
-
-    <!-- TODO remove -->
 
 </project>

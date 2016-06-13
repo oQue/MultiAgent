@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.smorzhok.multiagent</groupId>
-    <artifactId>sarl</artifactId>
+    <artifactId>jade</artifactId>
     <version>1.0</version>
     <parent>
         <groupId>com.smorzhok</groupId>
@@ -14,16 +14,34 @@
     </parent>
 
     <properties>
-        <sarl.version>0.3.1</sarl.version>
-        <janus.version>2.0.3.1</janus.version>
+        <jade.version>4.4.0</jade.version>
+        <slf4j.version>1.7.10</slf4j.version>
+        <compiler.plugins.version>2.0.2</compiler.plugins.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>tilab</id>
+            <url>http://jade.tilab.com/maven/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
-        <!-- Sarl / Janus -->
+        <!-- JADE -->
         <dependency>
-            <groupId>io.janusproject</groupId>
-            <artifactId>io.janusproject.kernel</artifactId>
-            <version>${janus.version}</version>
+            <groupId>com.tilab.jade</groupId>
+            <artifactId>jade</artifactId>
+            <version>${jade.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>com.smorzhok.multiagent</groupId>
@@ -34,20 +52,11 @@
 
     <build>
         <finalName>${project.artifactId}</finalName>
-        <resources>
-            <resource>
-                <directory>src/main/sarl</directory>
-                <includes>
-                    <include>**/*.sarl</include>
-                </includes>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
-                <groupId>io.sarl.maven</groupId>
-                <artifactId>sarl-maven-plugin</artifactId>
-                <version>${sarl.version}</version>
-                <extensions>true</extensions>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler.plugins.version}</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
