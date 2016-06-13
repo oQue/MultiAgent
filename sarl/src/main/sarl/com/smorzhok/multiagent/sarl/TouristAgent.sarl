@@ -1,0 +1,12 @@
+package com.smorzhok.multiagent.sarl
+
+import io.sarl.core.DefaultContextInteractions
+import io.sarl.core.Initialize
+
+agent TouristAgent {
+	uses DefaultContextInteractions
+	
+	on Initialize {
+		println("Initialized tourist")
+	}
+}

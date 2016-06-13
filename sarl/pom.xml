@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.smorzhok.multiagent</groupId>
+    <artifactId>sarl</artifactId>
+    <version>1.0</version>
+    <parent>
+        <groupId>com.smorzhok</groupId>
+        <artifactId>multiagent</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <properties>
+        <sarl.version>0.3.1</sarl.version>
+        <janus.version>2.0.3.1</janus.version>
+    </properties>
+
+    <dependencies>
+        <!-- Sarl / Janus -->
+        <dependency>
+            <groupId>io.janusproject</groupId>
+            <artifactId>io.janusproject.kernel</artifactId>
+            <version>${janus.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/sarl</directory>
+                <includes>
+                    <include>**/*.sarl</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>io.sarl.maven</groupId>
+                <artifactId>sarl-maven-plugin</artifactId>
+                <version>${sarl.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

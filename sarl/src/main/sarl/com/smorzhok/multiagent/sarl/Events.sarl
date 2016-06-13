@@ -1,0 +1,39 @@
+package com.smorzhok.multiagent.sarl
+
+event TourRequest {
+	val type : String
+	
+	new(t : String) {
+		type = t
+	}
+}
+
+event TourOffer {
+	val content : MessageContent
+	
+	new(content : MessageContent) {
+		this.content = content
+	}
+}
+
+event StatisticsEvent {
+	val content : MessageContent
+	
+	new(content : MessageContent) {
+		this.content = content
+	}
+}
+
+class MessageContent {
+	val price : double
+	val country : String
+	val duration : int
+	val popularity : double
+	
+	new(price : double, country : String, duration : int, popularity : double) {
+		this.price = price
+		this.country = country
+		this.duration = duration
+		this.popularity = popularity
+	}
+}

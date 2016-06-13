@@ -1,0 +1,16 @@
+package com.smorzhok.multiagent.sarl
+
+import io.sarl.core.DefaultContextInteractions
+import io.sarl.core.Initialize
+import io.sarl.core.Lifecycle
+
+agent BootAgent {
+	uses DefaultContextInteractions, Lifecycle
+	
+	on Initialize {
+		spawn(StatisticsAgent)
+		spawn(OperatorAgent)
+		spawn(TouristAgent)
+		killMe
+	}
+}
