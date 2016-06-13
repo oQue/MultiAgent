@@ -4,7 +4,7 @@ import com.smorzhok.multiagent.common.ContextHolder;
 import com.smorzhok.multiagent.common.entity.ModelParam;
 import com.smorzhok.multiagent.common.model.ModelCallback;
 import com.smorzhok.multiagent.common.model.ModelParamsFactory;
-import com.smorzhok.multiagent.jade.agent.AgentFactory;
+import com.smorzhok.multiagent.jade.agent.JadeAgentFactory;
 import com.smorzhok.multiagent.jade.agent.StatisticsAgent;
 
 import java.util.List;
@@ -44,12 +44,12 @@ public class JadeRunner {
                 new Object[] { callback });
         statistics.start();
 
-        List<AgentController> operatorAgents = AgentFactory.operatorAgents(agentContainer, params);
+        List<AgentController> operatorAgents = JadeAgentFactory.operatorAgents(agentContainer, params);
         for (AgentController operator : operatorAgents) {
             operator.start();
         }
 
-        List<AgentController> touristAgents = AgentFactory.touristAgents(agentContainer, params);
+        List<AgentController> touristAgents = JadeAgentFactory.touristAgents(agentContainer, params);
         for (AgentController tourist : touristAgents) {
             tourist.start();
         }

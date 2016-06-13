@@ -9,4 +9,8 @@ agent OperatorAgent {
 	on Initialize {
 		println("Initialized operator")
 	}
+	
+	on TourRequest {
+		println("TOUR REQUEST RECEIVED")
+	}
 }

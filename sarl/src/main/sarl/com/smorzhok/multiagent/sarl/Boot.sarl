@@ -9,8 +9,6 @@ agent BootAgent {
 	
 	on Initialize {
 		spawn(StatisticsAgent)
-		spawn(OperatorAgent)
-		spawn(TouristAgent)
 		killMe
 	}
 }

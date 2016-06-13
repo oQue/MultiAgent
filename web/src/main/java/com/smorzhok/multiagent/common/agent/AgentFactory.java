@@ -1,47 +1,18 @@
-package com.smorzhok.multiagent.jade.agent;
+package com.smorzhok.multiagent.common.agent;
 
 import com.smorzhok.multiagent.common.entity.ModelParam;
 import com.smorzhok.multiagent.common.model.TouristType;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
-import jade.wrapper.AgentContainer;
-import jade.wrapper.AgentController;
-import jade.wrapper.StaleProxyException;
-
 /**
- * Factory for initializing agents
+ * Abstract factory for initializing agents
  *
  * @author Dmitry Smorzhok
  */
-public final class AgentFactory {
+public abstract class AgentFactory {
 
     private static final Random RANDOM = new Random();
-
-    private AgentFactory() {}
-
-    /**
-     * Creates a collection of tourist agents according to given model params
-     * @param container agent container
-     * @param params    model params
-     * @return          list of agents
-     * @throws StaleProxyException
-     */
-    public static List<AgentController> touristAgents(AgentContainer container, ModelParam params)
-            throws StaleProxyException
-    {
-        List<AgentController> agents = new ArrayList<>();
-        for (int i = 0; i < params.getTouristAmount(); i++) {
-            double agentSalary = generateAgentSalary(params);
-            TouristType type = assignTouristType(params, agentSalary);
-            AgentController tourist = container.createNewAgent("tourist" + i, TouristAgent.class.getName(),
-                    new Object[]{ params.getOperatorAmount(), agentSalary, type.getName(), params.getEurCurrencyRate() });
-            agents.add(tourist);
-        }
-        return agents;
-    }
 
     /**
      * Method which generates an agent salary using normal distribution
@@ -50,7 +21,7 @@ public final class AgentFactory {
      * @param params    model params
      * @return          agent's salary which is >= min salary from model params
      */
-    private static double generateAgentSalary(ModelParam params) {
+    protected static double generateAgentSalary(ModelParam params) {
         double minSalary = params.getMinimumSalary();
         double average = params.getAverageSalary();
         double deviation = params.getSalaryDeviation();
@@ -80,7 +51,7 @@ public final class AgentFactory {
      * @param agentSalary   agent's salary
      * @return              type of tourist agent
      */
-    private static TouristType assignTouristType(ModelParam params, double agentSalary) {
+    protected static TouristType assignTouristType(ModelParam params, double agentSalary) {
         int budgetProbability;
         int regularProbability;
         int luxuryProbability;
@@ -114,25 +85,6 @@ public final class AgentFactory {
         int randomIndex = RANDOM.nextInt(100);
         int type = array[randomIndex];
         return TouristType.values[type];
-    }
-
-    /**
-     * Creates a collection of operator agents according to given model params
-     * @param container agent container
-     * @param params    model params
-     * @return          list of agents
-     * @throws StaleProxyException
-     */
-    public static List<AgentController> operatorAgents(AgentContainer container, ModelParam params)
-            throws StaleProxyException
-    {
-        List<AgentController> agents = new ArrayList<>();
-        for (int i = 0; i < params.getOperatorAmount(); i++) {
-            AgentController operator = container.createNewAgent("operator" + i, OperatorAgent.class.getName(),
-                    new Object[]{ params });
-            agents.add(operator);
-        }
-        return agents;
     }
 
 }

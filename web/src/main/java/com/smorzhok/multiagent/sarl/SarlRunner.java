@@ -7,6 +7,7 @@ import com.smorzhok.multiagent.common.entity.ModelParam;
 import com.smorzhok.multiagent.common.model.ModelCallback;
 import com.smorzhok.multiagent.common.model.ModelParamsFactory;
 import com.smorzhok.multiagent.sarl.BootAgent;
+import com.smorzhok.multiagent.sarl.agent.SarlAgentFactory;
 
 import io.janusproject.Boot;
 import io.janusproject.JanusConfig;
@@ -26,6 +27,8 @@ public class SarlRunner {
                 Module.class, JanusConfig.INJECTION_MODULE_NAME,
                 JanusConfig.INJECTION_MODULE_NAME_VALUE);
         Kernel kernel = Boot.startJanus(startupModule, BootAgent.class, args);
+        SarlAgentFactory.operatorAgents(kernel, params);
+        SarlAgentFactory.touristAgents(kernel, params);
     }
 
 }
