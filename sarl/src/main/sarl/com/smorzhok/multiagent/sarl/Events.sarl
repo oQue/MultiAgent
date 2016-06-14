@@ -1,0 +1,31 @@
+package com.smorzhok.multiagent.sarl
+
+import com.smorzhok.multiagent.common.StatisticsMessageContent
+
+event TourRequest {
+	val type : String
+	
+	new(t : String) {
+		type = t
+	}
+}
+
+event TourOffer {
+	val content : StatisticsMessageContent
+	
+	new(content : StatisticsMessageContent) {
+		this.content = content
+	}
+}
+
+event StatisticsEvent {
+	val content : StatisticsMessageContent
+	
+	new(content : StatisticsMessageContent) {
+		this.content = content
+	}
+}
+
+event KillEvent {
+	
+}

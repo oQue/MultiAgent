@@ -13,7 +13,7 @@ hs_err_pid*
 
 
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
-/*.iml
+*.iml
 ## Directory-based project format:
 .idea/
 # if you remove the above rule, at least ignore the following:
@@ -56,5 +56,10 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
+
+# project-specific part
 MTP*.txt
 APD*.txt
+sarl/src/main/generated-sources/
+.classpath
+.project

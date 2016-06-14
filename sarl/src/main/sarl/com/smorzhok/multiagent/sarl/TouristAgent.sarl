@@ -1,0 +1,126 @@
+package com.smorzhok.multiagent.sarl
+
+import io.sarl.core.DefaultContextInteractions
+import io.sarl.core.Initialize
+import io.sarl.core.Lifecycle
+import java.util.Random
+import io.sarl.core.Logging
+import io.sarl.core.Behaviors
+import io.sarl.core.Schedules
+
+import java.util.ArrayList
+
+import com.smorzhok.multiagent.common.StatisticsMessageContent
+
+agent TouristAgent {
+	uses DefaultContextInteractions, Lifecycle, Logging, Behaviors, Schedules
+	
+	val MONTH_PERIOD : int = 5 * 1000
+	val VACATION_PERIOD : int = 10 * 1000
+	val HOLIDAY_PER_MONTH : double = 2.33
+	val SHORTEST_VACATION : int = 7
+	val RANDOM : Random = new Random()
+	
+	var operatorsAmount : int
+	var type : String
+	var income : double
+	var balance : double
+	var holidayDays : double
+	var eurCurrencyRate : double
+	
+	var currentOffers = new ArrayList<StatisticsMessageContent>
+	var offered : boolean = false
+	
+	on Initialize {
+		val args = occurrence.parameters
+		if (args != null && args.length == 4) {
+			operatorsAmount = args.get(0) as Integer
+            income = args.get(1) as Double
+            type = args.get(2) as String
+            eurCurrencyRate = args.get(3) as Double
+            balance = income * RANDOM.nextInt(5)
+            holidayDays = RANDOM.nextInt(20)
+            println("Monthly income: " + income + ". Current balance: " + balance +
+                    ". Type: " + type + ". Holiday days: " + holidayDays)
+            every(MONTH_PERIOD) [
+            	monthPassed
+            ]
+            every(VACATION_PERIOD) [
+            	if (readyForVacation) {
+            		emit(new TourRequest(type))
+            	}
+            ]
+        } else {
+        	println("Wrong args: " + args)
+            killMe
+        }
+	}
+	
+	on TourOffer {
+		currentOffers += occurrence.content
+		if (!offered) {
+		    offered = true
+			val task = task("waiting_for_partner")
+		    task.every(1000) [
+		    	if (currentOffers.size == operatorsAmount) {
+		    		buyTour(currentOffers)
+		    		currentOffers.clear()
+		    		offered = false
+		    		task.cancel
+		    	}
+		    ]
+		}
+	}
+	
+	def buyTour(offers : ArrayList) {
+		var bestOffer : StatisticsMessageContent = null
+		var bestProposal : Double = null;
+		for (offer : currentOffers) {    			
+			var proposal = offer.getPrice() / offer.getDuration()
+			proposal /= offer.getPopularity()
+			if (bestProposal == null || proposal < bestProposal) {
+				bestProposal = proposal
+				bestOffer = offer
+            }
+		}
+		if (bestOffer != null) {
+			var price = bestOffer.getPrice() * eurCurrencyRate
+			var duration = bestOffer.getDuration()
+			if (price <= balance && duration <= holidayDays) {
+				balance -= price
+				holidayDays -= duration
+				println("Bought a tour to " + bestOffer.getCountry() + " (duration: " + duration + "; price: " + price + ")")
+                var pricePerDay = bestOffer.getPrice() / duration;
+				var stats = new StatisticsMessageContent(pricePerDay, bestOffer.getCountry(), bestOffer.getDuration(), bestOffer.getPopularity())
+				emit(new StatisticsEvent(stats))
+			}
+		}
+	}
+	
+	def monthPassed() {
+		var coefficient = RANDOM.nextDouble()
+        var spentThisMonth = income * coefficient
+        if (RANDOM.nextDouble() < 0.3) {
+            // once in ~3 months we're spending up to 3 salaries for goodies
+            var multiplier = RANDOM.nextInt(4)
+            if (multiplier > 0) {
+                spentThisMonth *= multiplier
+            }
+        }
+        synchronized (this) {
+            balance += income - spentThisMonth;
+            if (balance < 0) {
+                balance = 0
+            }
+            holidayDays += HOLIDAY_PER_MONTH
+        }
+	}
+	
+	def readyForVacation() : boolean {
+		return holidayDays > SHORTEST_VACATION && balance > income * 3
+	}
+    
+    on KillEvent {
+    	killMe
+    }
+ }

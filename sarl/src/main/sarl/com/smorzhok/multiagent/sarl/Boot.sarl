@@ -1,0 +1,22 @@
+package com.smorzhok.multiagent.sarl
+
+import io.sarl.core.DefaultContextInteractions
+import io.sarl.core.Initialize
+import io.sarl.core.Lifecycle
+
+agent BootAgent {
+	uses DefaultContextInteractions, Lifecycle
+	
+	on Initialize {
+		// do nothing
+	}
+}
+
+agent KillAgent {
+	uses DefaultContextInteractions, Lifecycle
+	
+	on Initialize {
+		emit(new KillEvent())
+		killMe
+	}
+}

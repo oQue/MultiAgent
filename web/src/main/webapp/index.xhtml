@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ace="http://www.icefaces.org/icefaces/components">
+<h:head>
+    <title>Multiagent System Simulation</title>
+</h:head>
+<h:outputStylesheet name="css/graphics.css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"/>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-composite-projections/0.3.5/conicConformalEurope-proj.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datamaps/0.5.5/datamaps.world.min.js"></script>
+<h:body>
+    <h:outputScript name="js/graphics.js" target="body"/>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <div id="map" style="height: 500px"></div>
+            </div>
+            <div class="col-md-5">
+                <div id="pieChart" style="height: 500px; padding-top: 50px;"></div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="container">
+        <h:form>
+            <h:commandButton value="Run Jade Simulation" action="#{agentBean.runJadeSimulation}" styleClass="btn btn-success" style="margin: 0 10px 10px 0;"/>
+            <h:commandButton value="Run Sarl Simulation" action="#{agentBean.runSarlSimulation}" styleClass="btn btn-success" style="margin: 0 10px 10px 0;"/>
+            <h:commandButton value="Stop Simulation" action="#{agentBean.stopSimulation}" styleClass="btn btn-danger" style="margin: 0 10px 10px 0;"/>
+            <ace:dataTable value="#{statisticsBean.list}" var="element">
+                <ace:column sortBy="#{element.country}" headerText="Country">
+                    <h:outputText value="#{element.country}"/>
+                </ace:column>
+                <ace:column sortBy="#{element.toursBought}" headerText="Total tours bought">
+                    <h:outputText value="#{element.toursBought}"/>
+                </ace:column>
+                <ace:column sortBy="#{element.averagePrice}" headerText="Average Price">
+                    <h:outputText value="#{element.averagePriceAsString}"/>
+                </ace:column>
+            </ace:dataTable>
+            <h:inputHidden value="#{statisticsBean.jsonData}" id="jsonData"/>
+        </h:form>
+    </div>
+</h:body>
+</html>

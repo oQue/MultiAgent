@@ -1,0 +1,45 @@
+package com.smorzhok.multiagent.sarl
+
+import io.sarl.core.DefaultContextInteractions
+import io.sarl.core.Initialize
+import io.sarl.core.Lifecycle
+import io.sarl.core.Logging
+
+import com.smorzhok.multiagent.common.model.ModelCallback
+import com.smorzhok.multiagent.common.StatisticsMessageContent
+
+agent StatisticsAgent {
+	uses DefaultContextInteractions, Lifecycle, Logging
+	
+	var callback : ModelCallback
+	var totalToursBought : int = 0
+	
+	on Initialize {
+		val args = occurrence.parameters
+		if (args != null && args.length == 1) {
+			callback = args.get(0) as ModelCallback
+			if (callback == null) {
+				println("Callback is null. Statistics agent is terminating...")
+            	killMe
+			}
+		} else {
+        	println("Wrong args: " + args)
+            killMe
+		}
+	}
+	
+	on StatisticsEvent {
+		var content = occurrence.content
+		totalToursBought++
+		content.setTotalToursBought(totalToursBought)
+		try {
+			callback.update(content)
+		} catch (e : Exception) {
+			println("Error while trying to update model: " + e.getMessage())
+		}
+	}
+    
+    on KillEvent {
+    	killMe
+    }
+}
