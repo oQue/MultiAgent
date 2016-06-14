@@ -23,10 +23,12 @@ public class SarlAgentFactory extends AgentFactory {
      * @param params    model params
      */
     public static void touristAgents(Kernel kernel, ModelParam params) {
+        int operatorsAmount = params.getOperatorAmount();
+        double eurRate = params.getEurCurrencyRate();
         for (int i = 0; i < params.getTouristAmount(); i++) {
             double agentSalary = generateAgentSalary(params);
             TouristType type = assignTouristType(params, agentSalary);
-            kernel.spawn(TouristAgent.class, params.getOperatorAmount(), agentSalary, type.getName(), params.getEurCurrencyRate());
+            kernel.spawn(TouristAgent.class, operatorsAmount, agentSalary, type.getName(), eurRate);
         }
     }
 

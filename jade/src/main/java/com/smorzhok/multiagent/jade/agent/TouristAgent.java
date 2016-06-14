@@ -59,7 +59,7 @@ public class TouristAgent extends Agent {
             income = (Double) args[1];
             type = (String) args[2];
             eurCurrencyRate = (Double) args[3];
-            balance = income * RANDOM.nextInt(2);
+            balance = income * RANDOM.nextInt(5);
             holidayDays = RANDOM.nextInt(20);
             LOGGER.debug("Monthly income: " + income + ". Current balance: " + balance +
                     ". Type: " + type + ". Holiday days: " + holidayDays);

@@ -1,5 +1,7 @@
 package com.smorzhok.multiagent.sarl
 
+import com.smorzhok.multiagent.common.StatisticsMessageContent
+
 event TourRequest {
 	val type : String
 	
@@ -9,31 +11,21 @@ event TourRequest {
 }
 
 event TourOffer {
-	val content : MessageContent
+	val content : StatisticsMessageContent
 	
-	new(content : MessageContent) {
+	new(content : StatisticsMessageContent) {
 		this.content = content
 	}
 }
 
 event StatisticsEvent {
-	val content : MessageContent
+	val content : StatisticsMessageContent
 	
-	new(content : MessageContent) {
+	new(content : StatisticsMessageContent) {
 		this.content = content
 	}
 }
 
-class MessageContent {
-	val price : double
-	val country : String
-	val duration : int
-	val popularity : double
+event KillEvent {
 	
-	new(price : double, country : String, duration : int, popularity : double) {
-		this.price = price
-		this.country = country
-		this.duration = duration
-		this.popularity = popularity
-	}
 }

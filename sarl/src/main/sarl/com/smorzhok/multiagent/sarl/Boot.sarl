@@ -8,7 +8,15 @@ agent BootAgent {
 	uses DefaultContextInteractions, Lifecycle
 	
 	on Initialize {
-		spawn(StatisticsAgent)
+		// do nothing
+	}
+}
+
+agent KillAgent {
+	uses DefaultContextInteractions, Lifecycle
+	
+	on Initialize {
+		emit(new KillEvent())
 		killMe
 	}
 }
