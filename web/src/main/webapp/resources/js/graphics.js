@@ -1,5 +1,6 @@
 var tid;
 var map, pie, piePath, pieArc;
+var startButtonsDisabled;
 
 $(function() {
     init();
@@ -18,6 +19,9 @@ function startUpdating() {
 function abortTimer() {
     clearInterval(tid);
     $("input[id*='jsonData']").val(null);
+    $(".btn-success").prop('disabled', false);
+    $(".btn-danger").prop('disabled', true);
+    startButtonsDisabled = false;
 }
 
 function init() {
@@ -73,11 +77,22 @@ function drawMap() {
 function update() {
     var modelData = $("input[id*='jsonData']").val();
     if (modelData) {
+        if (!startButtonsDisabled) {
+            $(".btn-success").prop('disabled', true);
+            $(".btn-danger").prop('disabled', false);
+            startButtonsDisabled = true;
+        }
         var fillingData = prepareFilling(modelData);
         // update map
         map.updateChoropleth(fillingData);
         // update pie chart
         updatePieChart(fillingData);
+    } else {
+        if (startButtonsDisabled) {
+            $(".btn-success").prop('disabled', false);
+            $(".btn-danger").prop('disabled', true);
+            startButtonsDisabled = false;
+        }
     }
 }
 

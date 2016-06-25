@@ -7,13 +7,21 @@ import com.smorzhok.multiagent.common.entity.ModelParam;
 import com.smorzhok.multiagent.common.model.ModelCallback;
 import com.smorzhok.multiagent.common.model.ModelParamsFactory;
 import com.smorzhok.multiagent.sarl.BootAgent;
-import com.smorzhok.multiagent.sarl.KillAgent;
 import com.smorzhok.multiagent.sarl.StatisticsAgent;
 import com.smorzhok.multiagent.sarl.agent.SarlAgentFactory;
+
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 import io.janusproject.Boot;
 import io.janusproject.JanusConfig;
 import io.janusproject.kernel.Kernel;
+import io.janusproject.services.IServiceManager;
+import io.janusproject.services.Services;
+import io.janusproject.services.spawn.SpawnService;
+import io.sarl.lang.core.Agent;
 
 public class SarlRunner {
 
@@ -39,8 +47,22 @@ public class SarlRunner {
         return kernel;
     }
 
-    public static void kill(Kernel kernel) throws Exception {
-        kernel.spawn(KillAgent.class);
+    @SuppressWarnings("unchecked")
+    public static void kill() throws Exception {
+        SpawnService spawnService = getFieldByReflection(kernel, "spawnService", SpawnService.class);
+        Map<UUID, Agent> agents = new HashMap<UUID, Agent>(getFieldByReflection(spawnService, "agents", Map.class));
+        for (Map.Entry<UUID, Agent> entry : agents.entrySet()) {
+            if (entry.getValue() instanceof BootAgent) {
+                continue;
+            }
+            spawnService.killAgent(entry.getKey());
+        }
+    }
+
+    private static <T> T getFieldByReflection(Object source, String fieldName, Class<T> clazz) throws Exception {
+        Field f = source.getClass().getDeclaredField(fieldName);
+        f.setAccessible(true);
+        return clazz.cast(f.get(source));
     }
 
 }

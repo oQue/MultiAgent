@@ -20,7 +20,6 @@ import javax.faces.context.FacesContext;
 import io.janusproject.kernel.Kernel;
 import jade.util.leap.Serializable;
 import jade.wrapper.AgentContainer;
-import jade.wrapper.StaleProxyException;
 
 /**
  * @author Dmitry Smorzhok
@@ -80,8 +79,7 @@ public class AgentBean implements Serializable {
             jadeContainer.kill();
             jadeContainer = null;
         } else if (sarlKernel != null) {
-            SarlRunner.kill(sarlKernel);
-            sarlKernel = null;
+            SarlRunner.kill();
         }
         JavaScriptRunner.runScript(FacesContext.getCurrentInstance(), "abortTimer()");
     }
